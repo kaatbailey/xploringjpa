@@ -1,7 +1,10 @@
 package com.kaat.xploringjpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/tasks")
@@ -18,5 +21,17 @@ public class TaskController {
         return taskRepository.save(task);
     }
 
-    // Other CRUD methods using taskRepository
+    @GetMapping
+    public ResponseEntity<List<Task>> getAllTasks() {
+        List<Task> tasks = taskRepository.findAll();
+
+        if (tasks.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(tasks);
+        }
+    }
+
+
+
 }
